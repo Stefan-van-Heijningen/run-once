@@ -1,8 +1,5 @@
-mod run_once;
-mod run_once_thread;
-
-pub use run_once;
-pub use run_once_thread;
+pub mod run_once;
+pub mod run_once_thread;
 
 #[cfg(test)]
 mod test_helpers {
@@ -20,7 +17,7 @@ mod test_helpers {
             }
         }
 
-        pub fn call(&self) {
+        pub fn increment(&self) {
             let mut count = self.count.lock().unwrap();
             *count += 1;
         }

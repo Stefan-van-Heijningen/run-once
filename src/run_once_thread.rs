@@ -28,7 +28,7 @@ mod tests {
         let counter = Counter::new();
 
         for _ in 0..2 {
-            run_once_thread!(counter.call());
+            run_once_thread!(counter.increment());
         }
 
         assert_eq!(counter.get_count(), 1);
@@ -39,8 +39,8 @@ mod tests {
         let counter = Counter::new();
 
         for _ in 0..2 {
-            run_once_thread!(counter.call());
-            run_once_thread!(counter.call());
+            run_once_thread!(counter.increment());
+            run_once_thread!(counter.increment());
         }
 
         assert_eq!(counter.get_count(), 2);
@@ -53,7 +53,7 @@ mod tests {
         for _ in 0..2 {
             let counter_clone = counter.clone();
             let handle = thread::spawn(move || {
-                run_once_thread!(counter_clone.call());
+                run_once_thread!(counter_clone.increment());
             });
             handle.join().unwrap();
         }
@@ -68,7 +68,7 @@ mod tests {
         for _ in 0..2 {
             let counter_clone = counter.clone();
             let handle = tokio::spawn(async move {
-                run_once_thread!(counter_clone.call());
+                run_once_thread!(counter_clone.increment());
             });
             handle.await.unwrap();
         }
